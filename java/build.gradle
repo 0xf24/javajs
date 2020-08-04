@@ -1,0 +1,29 @@
+plugins {
+    id 'java-library'
+}
+
+group = "io.manxboy.js"
+version = "0.0.1-SNAPSHOT"
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation('org.junit.jupiter:junit-jupiter-api:5.3.1')
+    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.3.1')
+    implementation("com.github.spotbugs:spotbugs-annotations:4.0.6")
+}
+
+test {
+
+    jvmArgs("-Djava.library.path=bin", "-XX:+CreateMinidumpOnCrash")
+
+    useJUnitPlatform()
+}
+
+compileJava {
+    options.headerOutputDirectory = file("../jni/include")
+
+}
