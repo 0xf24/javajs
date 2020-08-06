@@ -1,45 +1,43 @@
 package io.manxboy.js.value;
 
-import io.manxboy.js.JsContext;
-import io.manxboy.js.JsRuntime;
 import io.manxboy.js.impl.V8Ref;
 
 public class JsValue extends V8Ref {
 
     private JsContext context;
 
-    protected JsValue(long ptr) {
-        super(ptr);
+    protected JsValue(long rt_ptr, long ptr) {
+        super(rt_ptr, ptr);
     }
 
     @Override
-    protected native void nativeDestructor(long ptr);
+    protected native void nativeDestructor(long rt_ptr, long ptr);
 
     public JsValue (JsRuntime runtime, int value) {
-        super(nativeConstructor(runtime, value));
+        super(runtime.ptr, nativeConstructor(runtime.ptr, value));
     }
 
     public JsValue (JsRuntime runtime, long value) {
-        super(nativeConstructor(runtime, value));
+        super(runtime.ptr, nativeConstructor(runtime.ptr, value));
     }
 
     public JsValue (JsRuntime runtime, double value) {
-        super(nativeConstructor(runtime, value));
+        super(runtime.ptr, nativeConstructor(runtime.ptr, value));
     }
 
     public JsValue (JsRuntime runtime, boolean value) {
-        super(nativeConstructor(runtime, value));
+        super(runtime.ptr, nativeConstructor(runtime.ptr, value));
     }
 
     public JsValue (JsRuntime runtime, String value) {
-        super(nativeConstructor(runtime, value));
+        super(runtime.ptr, nativeConstructor(runtime.ptr, value));
     }
 
-    private static native long nativeConstructor(JsRuntime runtime, int value);
-    private static native long nativeConstructor(JsRuntime runtime, long value);
-    private static native long nativeConstructor(JsRuntime runtime, double value);
-    private static native long nativeConstructor(JsRuntime runtime, boolean value);
-    private static native long nativeConstructor(JsRuntime runtime, String value);
+    private static native long nativeConstructor(long rt_ptr, int value);
+    private static native long nativeConstructor(long rt_ptr, long value);
+    private static native long nativeConstructor(long rt_ptr, double value);
+    private static native long nativeConstructor(long rt_ptr, boolean value);
+    private static native long nativeConstructor(long rt_ptr, String value);
 
     public native double toDouble();
     public native long toInt();

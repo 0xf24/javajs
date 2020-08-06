@@ -1,22 +1,19 @@
 package io.manxboy.js.value;
 
-import io.manxboy.js.JsContext;
-import io.manxboy.js.JsRuntime;
-
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
-
 public class JsMap extends JsObject {
 
-    protected JsMap(JsRuntime runtime) {
-        super(nativeConstructor(runtime));
+    public JsMap(JsRuntime runtime) {
+        super(runtime.ptr, nativeConstructor(runtime.ptr));
     }
 
-    private static native long nativeConstructor(JsRuntime runtime);
+    private JsMap(long rt_ptr, long ptr) {
+        super(rt_ptr, ptr);
+    }
+
+    private static native long nativeConstructor(long rt_ptr);
 
     @Override
-    protected native void nativeDestructor(long ptr);
+    protected native void nativeDestructor(long rt_ptr, long ptr);
 
 
     public native void clear();

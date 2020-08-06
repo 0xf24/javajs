@@ -1,22 +1,19 @@
 package io.manxboy.js.value;
 
-import io.manxboy.js.JsContext;
-import io.manxboy.js.JsRuntime;
-
 public class JsObject extends JsValue {
 
-    protected JsObject(long ptr) {
-        super(ptr);
+    protected JsObject(long rt_ptr, long ptr) {
+        super(rt_ptr, ptr);
     }
 
     public JsObject(JsRuntime runtime) {
-        super(nativeConstructor(runtime));
+        super(runtime.ptr, nativeConstructor(runtime.ptr));
     }
 
-    private static native long nativeConstructor(JsRuntime runtime);
+    private static native long nativeConstructor(long rt_ptr);
 
     @Override
-    protected native void nativeDestructor(long ptr);
+    protected native void nativeDestructor(long rt_ptr, long ptr);
 
 
     public native JsValue get(String key);

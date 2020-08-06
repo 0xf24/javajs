@@ -5,12 +5,12 @@ import io.manxboy.js.value.JsValue;
 
 public class JsPromise<T extends JsValue> extends JsObject {
 
-    private JsPromise(long ptr) {
-        super(ptr);
+    private JsPromise(long rt_ptr, long ptr) {
+        super(rt_ptr, ptr);
     }
 
     @Override
-    protected native void nativeDestructor(long ptr);
+    protected native void nativeDestructor(long rt_ptr, long ptr);
 
 
 }

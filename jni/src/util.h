@@ -6,12 +6,18 @@
 #define JAVAJS_JNI_UTIL_H
 
 #include <jni.h>
+#include <cstdio>
+#include <stdlib.h>
+#include <libplatform/libplatform.h>
+#include <v8.h>
 
 struct ClassTable {
     jclass V8Ref;
     jfieldID V8RefPtr;
+    jfieldID V8RtPtr;
 
     jclass JsRuntime;
+    jfieldID JsRuntimePtr;
 
     jclass JsContext;
     jmethodID JsContextCtor;
@@ -51,5 +57,7 @@ struct ClassTable {
 };
 
 extern struct ClassTable classTable;
+extern std::unique_ptr<v8::Platform> platform;
+extern v8::ArrayBuffer::Allocator* allocator;
 
 #endif //JAVAJS_JNI_UTIL_H

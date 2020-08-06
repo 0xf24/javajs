@@ -1,15 +1,17 @@
 package io.manxboy.js.value;
 
-import io.manxboy.js.JsRuntime;
-import io.manxboy.js.value.JsObject;
-
 public class JsError extends JsObject {
+
     public JsError(JsRuntime runtime, String message) {
-        super(nativeConstructor(runtime, message));
+        super(runtime.ptr, nativeConstructor(runtime.ptr, message));
     }
 
-    private static native long nativeConstructor(JsRuntime runtime, String message);
+    private JsError(long rt_ptr, long ptr) {
+        super(rt_ptr, ptr);
+    }
+
+    private static native long nativeConstructor(long rt_ptr, String message);
 
     @Override
-    protected native void nativeDestructor(long ptr);
+    protected native void nativeDestructor(long rt_ptr, long ptr);
 }

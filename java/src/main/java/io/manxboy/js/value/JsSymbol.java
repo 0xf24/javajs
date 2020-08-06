@@ -1,18 +1,19 @@
 package io.manxboy.js.value;
 
-import io.manxboy.js.JsRuntime;
-import io.manxboy.js.value.JsValue;
-
 public class JsSymbol extends JsValue {
 
     public JsSymbol(JsRuntime runtime, String description) {
-        super(nativeConstructor(runtime, description));
+        super(runtime.ptr, nativeConstructor(runtime.ptr, description));
     }
 
-    private static native long nativeConstructor(JsRuntime runtime, String description);
+    private JsSymbol(long rt_ptr, long ptr) {
+        super(rt_ptr, ptr);
+    }
+
+    private static native long nativeConstructor(long rt_ptr, String description);
 
     @Override
-    protected native void nativeDestructor(long ptr);
+    protected native void nativeDestructor(long rt_ptr, long ptr);
 
 
     public static native JsSymbol forKey(JsRuntime runtime, String description);
