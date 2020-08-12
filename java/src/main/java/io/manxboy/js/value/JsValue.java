@@ -6,45 +6,78 @@ public class JsValue extends V8Ref {
 
     private JsContext context;
 
-    protected JsValue(long rt_ptr, long ptr) {
-        super(rt_ptr, ptr);
+    protected JsValue(JsRuntime runtime, long ptr) {
+        super(runtime, ptr);
     }
 
     @Override
-    protected native void nativeDestructor(long rt_ptr, long ptr);
+    protected native void nativeDestructor(JsRuntime runtime, long ptr);
 
-    public JsValue (JsRuntime runtime, int value) {
-        super(runtime.ptr, nativeConstructor(runtime.ptr, value));
-    }
 
-    public JsValue (JsRuntime runtime, long value) {
-        super(runtime.ptr, nativeConstructor(runtime.ptr, value));
-    }
+    public static native JsValue from(JsRuntime runtime, int value);
+    public static native JsValue from(JsRuntime runtime, long value);
+    public static native JsValue from(JsRuntime runtime, double value);
+    public static native JsValue from(JsRuntime runtime, boolean value);
+    public static native JsValue from(JsRuntime runtime, String value);
 
-    public JsValue (JsRuntime runtime, double value) {
-        super(runtime.ptr, nativeConstructor(runtime.ptr, value));
-    }
+    /**
+     * returns undefined value
+     * @param runtime the runtime to get the value from
+     * @return a javascript undefined value
+     */
+    public static native JsValue undefined(JsRuntime runtime);
 
-    public JsValue (JsRuntime runtime, boolean value) {
-        super(runtime.ptr, nativeConstructor(runtime.ptr, value));
-    }
+    /**
+     * returns null value. named nul because of name restrictions in java
+     * @param runtime the runtime to get the value from
+     * @return a javascript null value
+     */
+    public static native JsValue nul(JsRuntime runtime);
 
-    public JsValue (JsRuntime runtime, String value) {
-        super(runtime.ptr, nativeConstructor(runtime.ptr, value));
-    }
-
-    private static native long nativeConstructor(long rt_ptr, int value);
-    private static native long nativeConstructor(long rt_ptr, long value);
-    private static native long nativeConstructor(long rt_ptr, double value);
-    private static native long nativeConstructor(long rt_ptr, boolean value);
-    private static native long nativeConstructor(long rt_ptr, String value);
-
-    public native double toDouble();
-    public native long toInt();
+    public native double toDouble(JsContext context);
+    public native int toInt(JsContext context);
+    public native long toLong(JsContext context);
 
     @Override
     public native String toString();
-    public native boolean toBoolean();
+    public native String toString(JsContext context);
+    public native boolean toBoolean(JsContext context);
+
+    /**
+     * is equivalent to value === null in JS
+     * @return true if null, else false
+     */
+    public native boolean isNull();
+
+    /**
+     * is equivalent to value === undefined in JS
+     * @return true if undefined, else false
+     */
+    public native boolean isUndefined();
+
+    /**
+     * equivalent to typeof value === "string" in JS
+     * @return true if instance of a string, else false
+     */
+    public native boolean isString();
+
+    /**
+     * equivalent to typeof value === "number" in JS
+     * @return true of typeof a number, else false
+     */
+    public native boolean isNumber();
+
+    /**
+     * equivalent to value === true in JS
+     * @return true if true, else false
+     */
+    public native boolean isTrue();
+
+    /**
+     * equivalent to value === false in JS
+     * @return true if false, else true
+     */
+    public native boolean isFalse();
 
     /**
      * get a debug string represent
@@ -52,14 +85,22 @@ public class JsValue extends V8Ref {
      */
     public native String toDetailString();
 
+
     @Override
     public boolean equals(Object object) {
         return object instanceof JsValue && this.equals(object);
     }
 
+    /**
+     * performs the javascript strict (triple equals) evaluation between this the specified value
+     * @param value the value to compare to
+     * @return the comparison result
+     */
     public native boolean equals(JsValue value);
 
-    public native boolean strictEquals(JsValue value);
+    public native boolean looseEquals(JsContext context, JsValue value);
 
-    public native String typeOf(JsRuntime runtime);
+    public native String typeOf();
+
+    public native boolean instanceOf(JsContext context, JsObject object);
 }

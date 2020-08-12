@@ -5,12 +5,12 @@ import javax.annotation.CheckForNull;
 public class JsFunction extends JsObject {
 
 
-    private JsFunction(long rt_ptr, long ptr) {
-        super(rt_ptr, ptr);
+    private JsFunction(JsRuntime runtime, long ptr) {
+        super(runtime, ptr);
     }
 
     @Override
-    protected native void nativeDestructor(long rt_ptr, long ptr);
+    protected native void nativeDestructor(JsRuntime runtime, long ptr);
 
 
     /**

@@ -11,7 +11,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DV8_COMPRESS_POINTERS")
 find_package(JNI REQUIRED)
 
 add_library(
-    JavaJS_JNI SHARED src/util.h src/util.cpp src/JsRuntime.cpp src/JsContext.cpp)
+    JavaJS_JNI SHARED src/util.h src/util.cpp src/value/JsRuntime.cpp src/value/JsContext.cpp src/value/JsValue.cpp src/value/JsObject.cpp src/script/JsModule.cpp src/script/JsScript.cpp src/value/JsArray.cpp src/value/JsError.cpp src/value/JsFunction.cpp src/value/JsMap.cpp src/value/JsPromise.cpp src/value/JsSet.cpp src/value/JsSymbol.cpp)
 
 target_include_directories(JavaJS_JNI PUBLIC ${JNI_INCLUDE_DIRS})
 target_include_directories(JavaJS_JNI PUBLIC ${CMAKE_SOURCE_DIR}/external/v8/include)

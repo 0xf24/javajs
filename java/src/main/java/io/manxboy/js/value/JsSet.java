@@ -2,18 +2,18 @@ package io.manxboy.js.value;
 
 public class JsSet extends JsObject {
 
-    public JsSet(JsRuntime runtime) {
-        super(runtime.ptr, nativeConstructor(runtime.ptr));
+    public JsSet(JsContext context) {
+        super(context.getRuntime(), nativeConstructor(context));
     }
 
-    private JsSet(long rt_ptr, long ptr) {
-        super(rt_ptr, ptr);
+    private JsSet(JsRuntime runtime, long ptr) {
+        super(runtime, ptr);
     }
 
-    private static native long nativeConstructor(long rt_ptr);
+    private static native long nativeConstructor(JsContext context);
 
     @Override
-    protected native void nativeDestructor(long rt_ptr, long ptr);
+    protected native void nativeDestructor(JsRuntime runtime, long ptr);
 
 
     public native int size();

@@ -1,13 +1,17 @@
 package io.manxboy.js.script;
 
+import io.manxboy.js.ScriptOrigin;
 import io.manxboy.js.value.JsContext;
 import io.manxboy.js.impl.V8Ref;
+import io.manxboy.js.value.JsRuntime;
 import io.manxboy.js.value.JsValue;
+
+import javax.annotation.Nullable;
 
 public class JsScript extends V8Ref {
 
-    private JsScript(long rt_ptr, long ptr) {
-        super(rt_ptr, ptr);
+    private JsScript(JsRuntime runtime, long ptr) {
+        super(runtime, ptr);
     }
 
     /**
@@ -18,8 +22,10 @@ public class JsScript extends V8Ref {
      */
     public static native JsScript compile(JsContext context, String source);
 
-    public native JsValue run();
+    public static native JsScript compile(JsContext context, String source, ScriptOrigin origin);
+
+    public native JsValue run(JsContext context);
 
     @Override
-    protected native void nativeDestructor(long rt_ptr, long ptr);
+    protected native void nativeDestructor(JsRuntime runtime, long ptr);
 }

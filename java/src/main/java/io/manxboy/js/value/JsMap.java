@@ -2,31 +2,30 @@ package io.manxboy.js.value;
 
 public class JsMap extends JsObject {
 
-    public JsMap(JsRuntime runtime) {
-        super(runtime.ptr, nativeConstructor(runtime.ptr));
+    public JsMap(JsContext context) {
+        super(context.getRuntime(), nativeConstructor(context));
     }
 
-    private JsMap(long rt_ptr, long ptr) {
-        super(rt_ptr, ptr);
+    private JsMap(JsRuntime runtime, long ptr) {
+        super(runtime, ptr);
     }
 
-    private static native long nativeConstructor(long rt_ptr);
+    private static native long nativeConstructor(JsContext context);
 
     @Override
-    protected native void nativeDestructor(long rt_ptr, long ptr);
-
+    protected native void nativeDestructor(JsRuntime runtime, long ptr);
 
     public native void clear();
 
     public native int size();
 
-    public native boolean delete(JsContext context, JsValue key);
+    public native boolean mapDelete(JsContext context, JsValue key);
 
     public native JsValue[] entries(JsContext context);
 
-    public native JsValue get(JsContext context, JsValue key);
+    public native JsValue mapGet(JsContext context, JsValue key);
 
-    public native JsValue set(JsContext context, JsValue key, JsValue value);
+    public native JsValue mapSet(JsContext context, JsValue key, JsValue value);
 
     public native JsValue[] keys(JsContext context);
 

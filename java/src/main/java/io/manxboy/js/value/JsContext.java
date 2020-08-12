@@ -4,21 +4,15 @@ import io.manxboy.js.impl.V8Ref;
 
 public class JsContext extends V8Ref {
 
-    private final JsRuntime runtime;
-
     public JsContext(JsRuntime runtime) {
-        super(runtime.ptr, nativeConstructor(runtime.ptr));
-        this.runtime = runtime;
+        super(runtime, nativeConstructor(runtime));
     }
 
     private JsContext(JsRuntime runtime, long ptr) {
-        super(runtime.ptr, ptr);
-        this.runtime = runtime;
+        super(runtime, ptr);
     }
 
     public native JsObject global();
-
-    public native JsRuntime getRuntime();
 
     /**
      * "enter" this context
@@ -32,7 +26,7 @@ public class JsContext extends V8Ref {
     public native void exit();
 
     @Override
-    protected native void nativeDestructor(long rt_ptr, long ptr);
+    protected native void nativeDestructor(JsRuntime runtime, long ptr);
 
-    protected static native long nativeConstructor(long rt_ptr);
+    protected static native long nativeConstructor(JsRuntime runtime);
 }

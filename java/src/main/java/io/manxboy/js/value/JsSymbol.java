@@ -3,17 +3,17 @@ package io.manxboy.js.value;
 public class JsSymbol extends JsValue {
 
     public JsSymbol(JsRuntime runtime, String description) {
-        super(runtime.ptr, nativeConstructor(runtime.ptr, description));
+        super(runtime, nativeConstructor(runtime, description));
     }
 
-    private JsSymbol(long rt_ptr, long ptr) {
-        super(rt_ptr, ptr);
+    private JsSymbol(JsRuntime runtime, long ptr) {
+        super(runtime, ptr);
     }
 
-    private static native long nativeConstructor(long rt_ptr, String description);
+    private static native long nativeConstructor(JsRuntime runtime, String description);
 
     @Override
-    protected native void nativeDestructor(long rt_ptr, long ptr);
+    protected native void nativeDestructor(JsRuntime runtime, long ptr);
 
 
     public static native JsSymbol forKey(JsRuntime runtime, String description);

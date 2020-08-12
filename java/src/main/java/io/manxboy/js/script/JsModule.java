@@ -1,13 +1,14 @@
 package io.manxboy.js.script;
 
 import io.manxboy.js.impl.V8Ref;
+import io.manxboy.js.value.JsRuntime;
 
 public class JsModule extends V8Ref {
 
-    private JsModule(long rt_ptr, long ptr) {
-        super(rt_ptr, ptr);
+    private JsModule(JsRuntime runtime, long ptr) {
+        super(runtime, ptr);
     }
 
     @Override
-    protected native void nativeDestructor(long rt_ptr, long ptr);
+    protected native void nativeDestructor(JsRuntime runtime, long ptr);
 }

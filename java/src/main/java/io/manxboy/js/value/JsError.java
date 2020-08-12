@@ -2,16 +2,16 @@ package io.manxboy.js.value;
 
 public class JsError extends JsObject {
 
-    public JsError(JsRuntime runtime, String message) {
-        super(runtime.ptr, nativeConstructor(runtime.ptr, message));
+    public JsError(JsContext context, String message) {
+        super(context.getRuntime(), nativeConstructor(context, message));
     }
 
-    private JsError(long rt_ptr, long ptr) {
-        super(rt_ptr, ptr);
+    private JsError(JsRuntime runtime, long ptr) {
+        super(runtime, ptr);
     }
 
-    private static native long nativeConstructor(long rt_ptr, String message);
+    private static native long nativeConstructor(JsContext context, String message);
 
     @Override
-    protected native void nativeDestructor(long rt_ptr, long ptr);
+    protected native void nativeDestructor(JsRuntime runtime, long ptr);
 }
